@@ -13,6 +13,8 @@
 #define SRC_EXCHANGETJ_H_
 
 #include <memory>
+#include <chrono>
+#include <vector>
 
 namespace exchangetj
 {
@@ -28,9 +30,19 @@ public:
 
    bool init();
    void run();
+   void add_person();
+   void delete_person();
 
 private:
+   struct Person
+   {
+      std::time_t date;
+      std::string m_name;
+      std::string m_from_city;
+      std::string m_to_city;
+   };
 
+   std::vector<Person> m_people;
 };
 
 

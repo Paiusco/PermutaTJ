@@ -12,6 +12,7 @@
 #include "exchangetj.h"
 #include <iostream>
 #include <algorithm>
+#include <fstream>
 
 
 
@@ -27,6 +28,15 @@ ExchangeTJ::ExchangeTJ()
 
 ExchangeTJ::~ExchangeTJ()
 {
+   std::ofstream file("teste.txt");
+
+   for (auto &&i : m_people)
+   {
+      file.write(reinterpret_cast<char*>(&i), sizeof(Person));
+   }
+
+   file.close();
+   std::cout << "pos escrever no arquivo" << std::endl;
 
 }
 
@@ -35,6 +45,30 @@ ExchangeTJ::~ExchangeTJ()
 bool
 ExchangeTJ::init()
 {
+   //TODO: Not working yet.Think on boost::serialization or cereal
+   std::ifstream file("teste.txt");
+
+   long size;
+
+   file.read(reinterpret_cast<char*>(&size), sizeof(long));
+   m_people.resize(size);
+
+   for(int i = 0;i < size;++i)
+   {
+      Person p;
+      file.read(reinterpret_cast<char*>(&p), sizeof(Person));
+      m_people.emplace_back(p);
+   }
+   file.close();
+
+
+   for (auto &&i : m_people)
+   {
+      std::cout << "nome: " << i.m_name << std::endl;
+      std::cout << "from: " << i.m_from_city << std::endl;
+      std::cout << "to: " << i.m_to_city << std::endl;
+   }
+
    return true;
 }
 

@@ -1,7 +1,6 @@
-file(GLOB SOURCES_APP "*.cpp")
+cmake_minimum_required(VERSION 3.10)
 
-include_directories(${CMAKE_CURRENT_BINARY_DIR})
+project(exchangetj_project)
 
-add_executable(${APP_NAME} ${SOURCES_APP} ${VERSION_H_FILE})
-
-target_link_libraries(${APP_NAME} pthread)
+add_subdirectory(exchangetj)
+add_subdirectory(main)

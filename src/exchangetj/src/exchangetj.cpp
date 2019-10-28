@@ -9,6 +9,7 @@
  *******************************************************************************
  */
 
+#include <cereal/types/memory.hpp>
 #include "exchangetj.h"
 #include <iostream>
 #include <algorithm>
@@ -28,6 +29,8 @@ ExchangeTJ::ExchangeTJ()
 
 ExchangeTJ::~ExchangeTJ()
 {
+   //throwing destructor == evil
+   /*
    std::ofstream file("teste.txt");
 
    for (auto &&i : m_people)
@@ -37,7 +40,7 @@ ExchangeTJ::~ExchangeTJ()
 
    file.close();
    std::cout << "pos escrever no arquivo" << std::endl;
-
+   */
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -45,6 +48,7 @@ ExchangeTJ::~ExchangeTJ()
 bool
 ExchangeTJ::init()
 {
+   /*
    //TODO: Not working yet.Think on boost::serialization or cereal
    std::ifstream file("teste.txt");
 
@@ -68,7 +72,7 @@ ExchangeTJ::init()
       std::cout << "from: " << i.m_from_city << std::endl;
       std::cout << "to: " << i.m_to_city << std::endl;
    }
-
+   */
    return true;
 }
 

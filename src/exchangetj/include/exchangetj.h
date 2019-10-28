@@ -15,6 +15,9 @@
 #include <memory>
 #include <chrono>
 #include <vector>
+#include <string>
+#include <cereal/types/memory.hpp>
+#include "cereal/archives/binary.hpp"
 
 namespace exchangetj
 {
@@ -32,7 +35,19 @@ public:
    void run();
    void add_person();
    void delete_person();
-
+  
+   //minimum work for cereal
+   int tempData{12};
+   template <typename Archive>
+   void save( Archive& ar ) const
+   {
+      ar( tempData );
+   }
+   template <typename Archive>
+   void load( Archive& ar ) 
+   {
+      ar( tempData );
+   }
 private:
    struct Person
    {

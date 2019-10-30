@@ -1,7 +1,10 @@
-file(GLOB SOURCES_APP "*.cpp")
+add_library(exchangetj STATIC exchangetj.cpp)
+add_executable(main main.cpp)
 
-include_directories(${CMAKE_CURRENT_BINARY_DIR})
+set_target_properties(exchangetj PROPERTIES CXX_STANDARD 14 CXX_STANDARD_REQUIRED YES CXX_EXTENSIONS NO)
+set_target_properties(main PROPERTIES CXX_STANDARD 14 CXX_STANDARD_REQUIRED YES CXX_EXTENSIONS NO)
 
-add_executable(${APP_NAME} ${SOURCES_APP} ${VERSION_H_FILE})
+target_include_directories(exchangetj PUBLIC "./" "../include")
 
-target_link_libraries(${APP_NAME} pthread)
+target_link_libraries(main exchangetj)
+target_link_libraries(main atomic)

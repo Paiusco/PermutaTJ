@@ -1,4 +1,9 @@
 libs/
 build/*
+# external libs are added in ./include for now
+include/*
+# leftover to be deleted as soon as build works
 src/exchangetj/include/cereal/*
 .vscode/*
+# .swp are vim temporary buffer files
+*.swp

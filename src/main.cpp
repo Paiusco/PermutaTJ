@@ -11,8 +11,11 @@
 
 #include <iostream>
 #include <memory>
+#include <fstream>
 
 #include "exchangetj.h"
+
+#include "cereal/archives/binary.hpp"
 
 void
 help()
@@ -36,7 +39,16 @@ int main()
       return EXIT_FAILURE;
    }
 
-   while ( running )
+   std::ofstream os{};
+   cereal::BinaryOutputArchive outputArchive( os );
+   os.close();
+   os.clear();
+   std::ifstream is{};
+   cereal::BinaryInputArchive inputArchive(is);
+   is.close();
+   is.clear();
+
+   while (running)
    {
       std::cout << "******************************************" << std::endl;
       std::cout << " 1 - Procurar por possíves permutas" << std::endl;
@@ -51,38 +63,35 @@ int main()
       std::cin >> choice;
       std::cin.ignore();
 
-      switch ( choice )
+      switch (choice)
       {
          case 1:
-            std::cout << "Vamos ver se há alguma permuta pronta!" << std::endl;
+            std::cout << "Vamos ver se há alguma permuta possível!\n";
+            tj->run();
             // rest of code here
             break;
          case 2:
-            std::cout << "Entrando em modo de adição de pessoas..."
-               << std::endl;
+            std::cout << "Entrando em modo de adição de pessoas...\n";
             tj->add_person();
             // rest of code here
             break;
          case 3:
-            std::cout << "Entrando em modo de exclusão de pessoas..."
-               << std::endl;
+            std::cout << "Entrando em modo de exclusão de pessoas...\n";
             tj->delete_person();
             // rest of code here
             break;
          case 4:
-            std::cout << "Vamos explicar cada uma das opções então!"
-               << std::endl;
+            std::cout << "Vamos explicar cada uma das opções então!\n";
             help();
             // rest of code here
             break;
          case 5:
-            system("clear");
-            std::cout << "Desligando..." << std::endl;
+            std::cout << "Desligando...\n";
             running = false;
             break;
          default:
-            std::cout << "Essa escolha não é válida" << std::endl;
-            std::cout << "Escolha novamente!" << std::endl;
+            std::cout << "Essa escolha não é válida\n";
+            std::cout << "Escolha novamente!\n";
             break;
       }
 

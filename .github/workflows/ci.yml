@@ -1,0 +1,92 @@
+name: ci
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - master
+
+#Based on https://github.com/cpp-best-practices/cpp_starter_project/blob/main/.github/workflows/ci.yml
+
+env:
+  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
+  # Conan cache environment variables
+  CONAN_SYSREQUIRES_MODE: enabled
+  CONAN_USER_HOME: "${{ github.workspace }}/conan-cache"
+  CONAN_USER_HOME_SHORT: "${{ github.workspace }}/conan-cache/short"
+
+jobs:
+  Test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+
+      # Recommendations:
+      #   * support at least 2 operating systems
+      #   * support at least 2 compilers
+      #   * make sure all supported configurations for your project are built
+      #
+      # Disable/enable builds in this list to meet the above recommendations
+      # and your own projects needs
+      matrix:
+        os:
+          - ubuntu-latest
+        compiler:
+          # you can specify the version after `-` like "llvm-13.0.0".
+          # - llvm
+          - gcc
+        generator:
+          - "Ninja"
+        build_type:
+          - Debug
+          - Release
+
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v2
+
+      - name: Cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ${{ env.CONAN_USER_HOME }}
+            ~/.cache/pip
+          key: ${{ runner.os }}-${{ matrix.compiler }}-${{matrix.build_type}}-${{matrix.generator}}-${{ hashFiles('**/CMakeLists.txt') }}-${{ hashFiles('./conanfile.txt')}}
+          restore-keys: |
+            ${{ runner.os }}-${{ matrix.compiler }}-${{matrix.build_type}}-${{matrix.generator}}
+
+      - name: Setup Cpp
+        uses: aminya/setup-cpp@v1
+        with:
+          compiler: ${{ matrix.compiler }}
+
+          cmake: true
+          ninja: true
+          conan: true
+          ccache: true
+          # clangtidy: true
+          cppcheck: true
+          gcovr: true
+
+      - name: Configure CMake
+        run: |
+          mkdir build && cd build
+          conan install ..
+          cmake -S .. -B . -G "${{matrix.generator}}" -DCMAKE_BUILD_TYPE:STRING=${{matrix.build_type}}
+
+      - name: Build
+        run: |
+          cmake --build ./build --config ${{matrix.build_type}}
+
+      - name: Unix - Test and coverage
+        working-directory: ./build
+        run: |
+          ctest -C ${{matrix.build_type}}
+          gcovr -j ${{env.nproc}} --delete --root ../ --print-summary --xml-pretty --xml coverage.xml .
+
+      - name: Publish to codecov
+        uses: codecov/codecov-action@v2
+        with:
+          flags: ${{ runner.os }}
+          name: ${{ runner.os }}-coverage
+          files: ./build/coverage.xml

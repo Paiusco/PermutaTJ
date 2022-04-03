@@ -31,7 +31,7 @@ int main()
    int choice;
    bool running = true;
 
-   auto tj = std::make_shared<exchangetj::ExchangeTJ>();
+   auto tj = std::make_unique<exchangetj::ExchangeTJ>();
 
    if ( !tj->init() )
    {

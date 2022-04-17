@@ -1,0 +1,9 @@
+# Hidden folders
+.git/
+.github/
+
+# Folders
+build/
+
+#Files
+LICENSE

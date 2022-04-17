@@ -1,12 +1,6 @@
-name: ci
-on:
-  pull_request:
-  push:
-    branches:
-      - main
-      - master
-
 #Based on https://github.com/cpp-best-practices/cpp_starter_project/blob/main/.github/workflows/ci.yml
+name: ci
+on: pull_request
 
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)

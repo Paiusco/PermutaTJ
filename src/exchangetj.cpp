@@ -30,53 +30,8 @@ bool ExchangeTJ::init()
 
 void ExchangeTJ::run()
 {
-  for (auto it = m_people.begin(); it != m_people.end(); ++it)
-  {
-    for (auto it2 = m_people.begin(); it2 != m_people.end(); ++it)
-    {
-      if (it->m_to_city == it2->m_from_city)
-      {
-        if (it->m_from_city == it2->m_to_city)
-        {
-          std::cout << "Match! Permuta direta\n";
-          std::cout << "Entre " << it->m_name << " e " << it2->m_name << '\n';
-          continue;
-        }
-
-        for (auto it3 = m_people.begin(); it3 != m_people.end(); ++it)
-        {
-          if (it2->m_to_city == it3->m_from_city)
-          {
-            if (it->m_from_city == it3->m_to_city)
-            {
-              std::cout << "Match! Permuta level 2\n";
-              std::cout << "Entre " << it->m_name << ", " << it2->m_name
-                        << " e " << it3->m_name << '\n';
-              continue;
-            }
-
-            for (auto it4 = m_people.begin(); it4 != m_people.end(); ++it)
-            {
-              if (it2->m_to_city == it4->m_from_city)
-              {
-                if (it->m_from_city == it4->m_to_city)
-                {
-                  std::cout << "Match! Permuta level 2\n";
-                  std::cout << "Entre " << it->m_name << ", " << it2->m_name
-                            << " e " << it4->m_name << '\n';
-                  continue;
-                }
-
-                // for.......
-                // https://www.geeksforgeeks.org/find-paths-given-source-destination/
-              }
-            }
-          }
-        }
-      }
-      /* code */
-    }
-  }
+  // for.......
+  // https://www.geeksforgeeks.org/find-paths-given-source-destination/
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

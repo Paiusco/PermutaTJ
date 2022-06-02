@@ -2,7 +2,9 @@ add_library (SOURCES_N_HEADERS
   person.cpp
   person.h
   exchangetj.cpp
-  exchangetj.h)
+  exchangetj.h
+  match_seeker.cpp
+  match_seeker.h)
 
 add_executable(${PROJECT_NAME} main.cpp ${VERSION_H_FILE})
 

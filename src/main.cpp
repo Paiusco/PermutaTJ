@@ -10,6 +10,7 @@
 
 #include "cereal/archives/binary.hpp"
 #include "exchangetj.h"
+#include "menu.h"
 
 #include <fstream>
 #include <iostream>
@@ -35,7 +36,8 @@ int main()
     std::cout << "Falha na inicialização, favor corrigir!" << std::endl;
     return EXIT_FAILURE;
   }
-
+  exchangetj::Menu m{};
+  m.main_menu();
   std::ofstream os{};
   cereal::BinaryOutputArchive outputArchive(os);
   os.close();

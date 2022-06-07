@@ -79,9 +79,10 @@ std::ostream& operator<<(std::ostream& os, const Person& person)
 {
   os << person.name() << ' ' << person.email() << ' ' << person.current_city()
      << ' ' << person.m_first_desire_city << ' '
-     << person.m_second_option_city.value_or("empty") << ' '
-     << person.m_third_option_city.value_or("empty") << '\n';
+     << person.m_second_option_city.value_or("") << ' '
+     << person.m_third_option_city.value_or("") << '\n';
 
   return os;
 }
+
 } // namespace exchangeTJ

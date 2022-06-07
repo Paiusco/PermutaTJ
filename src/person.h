@@ -8,7 +8,7 @@
 namespace exchangeTJ
 {
 
-class Person
+class Person final
 {
 public:
   Person(std::string name, std::string email, std::string current_city,

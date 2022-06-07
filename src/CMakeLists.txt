@@ -4,7 +4,9 @@ add_library (SOURCES_N_HEADERS
   exchangetj.cpp
   exchangetj.h
   match_seeker.cpp
-  match_seeker.h)
+  match_seeker.h
+  menu.cpp
+  menu.h)
 
 add_executable(${PROJECT_NAME} main.cpp ${VERSION_H_FILE})
 
